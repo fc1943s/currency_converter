@@ -18,7 +18,7 @@ config :esbuild,
   version: "0.17.11",
   currency_converter: [
     args:
-      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+      ~w(js/app.ts --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
@@ -27,7 +27,7 @@ config :tailwind,
   version: "3.4.0",
   currency_converter: [
     args: ~w(
-      --config=tailwind.config.js
+      --config=tailwind.config.ts
       --input=css/app.css
       --output=../priv/static/assets/app.css
     ),

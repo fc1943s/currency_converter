@@ -1,4 +1,4 @@
-defmodule CurrencyConverterWeb.PageControllerTest do
+defmodule CurrencyConverterWeb.TransactionsControllerTest do
   use CurrencyConverterWeb.ConnCase
 
   test "GET /", %{conn: conn} do

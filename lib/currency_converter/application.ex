@@ -11,7 +11,8 @@ defmodule CurrencyConverter.Application do
     children = [
       CurrencyConverterWeb.Telemetry,
       CurrencyConverter.Repo,
-      {DNSCluster, query: Application.get_env(:currency_converter, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:currency_converter, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: CurrencyConverter.PubSub},
       CurrencyConverterWeb.Endpoint
     ]

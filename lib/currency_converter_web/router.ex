@@ -17,13 +17,14 @@ defmodule CurrencyConverterWeb.Router do
   scope "/", CurrencyConverterWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
+    get "/", TransactionsController, :home
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", CurrencyConverterWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", CurrencyConverterWeb do
+    pipe_through :api
+    post "/convert", ConversionController, :convert
+    get "/transactions/:user_id", ConversionController, :list
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:currency_converter, :dev_routes) do

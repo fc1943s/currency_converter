@@ -6,8 +6,10 @@ if (!$fast) {
     mix test
 
     mix assets.deploy
+
+    bun install --cwd assets --frozen-lockfile
 }
 
 mix credo
 
-mix release
+mix release --overwrite
