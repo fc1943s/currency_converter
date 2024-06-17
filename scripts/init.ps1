@@ -5,6 +5,6 @@ curl -fsSL https://bun.sh/install | bash
 $env:PATH = "~/.bun/bin:$env:PATH"
 
 if ($IsLinux) {
-    apt update
-    apt install -y inotify-tools
+    sudo apt update
+    sudo apt install -y inotify-tools
 }

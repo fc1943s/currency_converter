@@ -8,17 +8,21 @@ defmodule CurrencyConverter.Application do
 
   @impl true
   def start(_type, _args) do
-    children = [
-      CurrencyConverterWeb.Telemetry,
-      CurrencyConverter.Repo,
-      {DNSCluster,
-       query: Application.get_env(:currency_converter, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: CurrencyConverter.PubSub},
-      CurrencyConverterWeb.Endpoint
-    ]
-
-    opts = [strategy: :one_for_one, name: CurrencyConverter.Supervisor]
-    Supervisor.start_link(children, opts)
+    Supervisor.start_link(
+      [
+        CurrencyConverterWeb.Telemetry,
+        CurrencyConverter.Repo,
+        {DNSCluster,
+         query: Application.get_env(:currency_converter, :dns_cluster_query) || :ignore},
+        {ConCache,
+         [name: :rates_cache] ++
+           Application.get_env(:currency_converter, CurrencyConverter.Cache, [])},
+        {Phoenix.PubSub, name: CurrencyConverter.PubSub},
+        CurrencyConverterWeb.Endpoint
+      ],
+      strategy: :one_for_one,
+      name: CurrencyConverter.Supervisor
+    )
   end
 
   @impl true

@@ -1,12 +1,14 @@
 defmodule CurrencyConverterWeb.ConversionController do
+  require Logger
+
   use CurrencyConverterWeb, :controller
 
   alias CurrencyConverter.Transactions
   alias CurrencyConverter.ExchangeRate
 
   def convert(conn, %{"user_id" => user_id, "from" => from, "to" => to, "amount" => amount}) do
-    with {:ok, to_amount} <- ExchangeRate.convert(from, to, String.to_float(amount)),
-         {:ok, rate} <- ExchangeRate.fetch_rate(to),
+    Logger.debug("conversion_controller.convert / user_id: #{user_id} / from: #{from} / to: #{to} / amount: #{amount}")
+    with {:ok, to_amount, rate: rate} <- ExchangeRate.convert(from, to, String.to_float(amount)),
          {:ok, conversion} <-
            Transactions.create_conversion(%{
              user_id: user_id,
@@ -32,6 +34,7 @@ defmodule CurrencyConverterWeb.ConversionController do
   end
 
   def list(conn, %{"user_id" => user_id}) do
+    Logger.debug("conversion_controller.list / user_id: #{user_id}")
     transactions = Transactions.list_conversions_by_user(user_id)
     json(conn, transactions)
   end

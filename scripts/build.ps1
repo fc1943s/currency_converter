@@ -1,15 +1,27 @@
 param($fast)
 
-if (!$fast) {
-    mix setup
 
+mix setup
+
+if (!$fast) {
     ~/.bun/bin/bun install --cwd assets --frozen-lockfile
 
-    mix test
+    mix deps.compile
 
+    mix dialyzer
+    mix credo
+
+    mix test
+}
+
+$env:MIX_ENV = 'prod'
+
+if (!$fast) {
     mix assets.deploy
 }
 
-mix credo
-
 mix release --overwrite
+
+if (!$fast) {
+    mix hex.outdated
+}

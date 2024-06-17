@@ -4,6 +4,11 @@ config :currency_converter,
   ecto_repos: [CurrencyConverter.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+config :currency_converter, CurrencyConverter.Cache,
+  backend: :ets,
+  ttl_check_interval: :timer.minutes(30),
+  global_ttl: :timer.hours(1)
+
 config :currency_converter, CurrencyConverterWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,

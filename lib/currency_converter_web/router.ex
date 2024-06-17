@@ -17,7 +17,7 @@ defmodule CurrencyConverterWeb.Router do
   scope "/", CurrencyConverterWeb do
     pipe_through :browser
 
-    get "/", TransactionsController, :home
+    live "/", ConversionLive, :index
   end
 
   scope "/api", CurrencyConverterWeb do
