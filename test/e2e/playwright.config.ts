@@ -15,7 +15,7 @@ export default {
 
   webServer: [
     {
-      command: `pwsh ../../scripts/serve.ps1"`,
+      command: `pwsh ../../scripts/serve.ps1`,
       url: baseURL,
       timeout: 40 * 1000,
       reuseExistingServer: false,
