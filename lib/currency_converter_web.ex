@@ -66,7 +66,6 @@ defmodule CurrencyConverterWeb do
   defp html_helpers do
     quote do
       import Phoenix.HTML
-      import CurrencyConverterWeb.CoreComponents
       import CurrencyConverterWeb.Gettext
 
       alias Phoenix.LiveView.JS
@@ -84,6 +83,7 @@ defmodule CurrencyConverterWeb do
     end
   end
 
+  @spec __using__(atom()) :: any()
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
   end

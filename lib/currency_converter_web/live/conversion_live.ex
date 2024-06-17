@@ -2,15 +2,27 @@ defmodule CurrencyConverterWeb.ConversionLive do
   require Logger
 
   use CurrencyConverterWeb, :live_view
+  use PrimerLive
 
   alias CurrencyConverter.ExchangeRate
   alias CurrencyConverter.Transactions
 
   @spec mount(any(), any(), any()) :: {:ok, any()}
   def mount(params, session, socket) do
-    Logger.debug("conversion_live.mount / params: #{params |> inspect} / session: #{session |> inspect} / socket: #{socket |> inspect}")
+    Logger.debug(
+      "conversion_live.mount / params: #{params |> inspect} / session: #{session |> inspect} / socket: #{socket |> inspect}"
+    )
 
-    {:ok, assign(socket, from: "USD", to: "BRL", amount: 0, result: nil, error: nil, reason: nil)}
+    {:ok,
+     assign(socket,
+       page_title: "Currency Converter",
+       from: "USD",
+       to: "BRL",
+       amount: 0,
+       result: nil,
+       error: nil,
+       reason: nil
+     )}
   end
 
   defp create_transaction(
@@ -21,7 +33,9 @@ defmodule CurrencyConverterWeb.ConversionLive do
          rate: rate,
          socket: socket
        ) do
-    Logger.debug("conversion_live.create_transaction / from: #{from} / amount: #{amount} / to: #{to} / to_amount: #{to_amount} / rate: #{rate} / socket: #{socket |> inspect}")
+    Logger.debug(
+      "conversion_live.create_transaction / from: #{from} / amount: #{amount} / to: #{to} / to_amount: #{to_amount} / rate: #{rate} / socket: #{socket |> inspect}"
+    )
 
     case(
       Transactions.create_conversion(%{
@@ -64,7 +78,9 @@ defmodule CurrencyConverterWeb.ConversionLive do
 
   @spec handle_event(<<_::56>>, map(), any()) :: {:noreply, any()}
   def handle_event("convert", %{"from" => from, "to" => to, "amount" => amount}, socket) do
-    Logger.debug("conversion_live.handle_event / from: #{from} / amount: #{amount} / to: #{to} / amount: #{amount} / socket: #{socket |> inspect}")
+    Logger.debug(
+      "conversion_live.handle_event / from: #{from} / amount: #{amount} / to: #{to} / amount: #{amount} / socket: #{socket |> inspect}"
+    )
 
     case parse_float(amount) do
       {:ok, amount_float} ->
@@ -94,11 +110,14 @@ defmodule CurrencyConverterWeb.ConversionLive do
 
     ~H"""
     <div>
-      <form phx-submit="convert">
-        <input type="text" name="from" value={@from} placeholder="From currency" />
-        <input type="text" name="to" value={@to} placeholder="To currency" />
-        <input type="number" name="amount" value={@amount} step="0.01" placeholder="Amount" />
-        <button type="submit">Convert</button>
+      <form phx-submit="convert" style="display: flex; gap: 7px">
+        <.text_input type="text" name="from" value={@from} placeholder="From currency" />
+        <.text_input type="text" name="to" value={@to} placeholder="To currency" />
+        <.text_input type="number" name="amount" value={@amount} step="0.01" placeholder="Amount" />
+        <.button type="submit">
+          <.octicon name="arrow-switch-16" />
+          <span>Convert</span>
+        </.button>
       </form>
       <p>Result: <%= inspect(@result) %></p>
       <p>Error: <%= inspect(@error) %></p>

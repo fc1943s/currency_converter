@@ -23,5 +23,7 @@ if (!$fast) {
 mix release --overwrite
 
 if (!$fast) {
+    pwsh test/e2e/run.ps1
+
     mix hex.outdated
 }

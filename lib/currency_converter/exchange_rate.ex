@@ -19,12 +19,11 @@ defmodule CurrencyConverter.ExchangeRate do
       {:ok, %HTTPoison.Response{body: body}} ->
         case Jason.decode(body) do
           {:ok, %{"error" => reason, "success" => false}} ->
-            # {:error, :exchangerates_error, reason}
-            {:ok, -1}
+            {:error, :exchangerates_error, reason}
 
           {:ok, result} ->
             :ok = ConCache.put(@topic, :rates, result)
-            PubSub.broadcast(CurrencyConverter.PubSub, @topic, {:update, result})
+            PubSub.broadcast(CurrencyConverter.PubSub, Atom.to_string(@topic), {:update, result})
             {:ok, result}
 
           {:error, reason} ->
