@@ -1,4 +1,5 @@
 param($fast)
+$ErrorActionPreference = 'Stop'
 
 
 mix setup
