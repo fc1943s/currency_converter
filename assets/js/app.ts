@@ -21,8 +21,8 @@ import "phoenix_html"
 import { Socket } from "phoenix"
 import { LiveSocket } from "phoenix_live_view"
 import topbar from "../vendor/topbar"
-import "primer-live/primer-live.css"
-import { Prompt } from "primer-live"
+import "primer_live/primer-live.css"
+import { Prompt } from "primer_live"
 
 let csrfToken = document
   .querySelector("meta[name='csrf-token']")

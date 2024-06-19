@@ -14,8 +14,6 @@ if (!$fast) {
     mix test
 }
 
-$env:MIX_ENV = 'prod'
-
 if (!$fast) {
     mix assets.deploy
 }

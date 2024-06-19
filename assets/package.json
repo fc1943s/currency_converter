@@ -1,6 +1,6 @@
 {
     "dependencies": {
-        "primer-live": "file:../deps/primer_live"
+        "primer_live": "file:../deps/primer_live"
     },
     "devDependencies": {
         "@types/node": "^20.14.2",

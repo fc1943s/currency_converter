@@ -4,7 +4,7 @@ config :currency_converter, CurrencyConverter.Repo,
   database: "_build/dev/rel/currency_converter/bin/currency_converter_dev.sqlite3"
 
 config :currency_converter, CurrencyConverterWeb.Endpoint,
-  http: [ip: {127, 0, 0, 1}, port: 4000],
+  http: [ip: {127, 0, 0, 1}, port: 8080],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
